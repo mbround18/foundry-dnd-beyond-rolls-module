@@ -1,3 +1,5 @@
+import { titleCase } from "../utils/titlecase";
+
 export function generateFakeRollFromDDBRoll(ddbData) {
   let ddbRoll = ddbData.rolls[0];
   console.log(ddbRoll);
@@ -20,7 +22,9 @@ export function generateFakeRollFromDDBRoll(ddbData) {
   let chatOptions = {
     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
     speaker: { alias: ddbData.context.name },
-    flavor: ddbData.action + " " + ddbRoll.rollType + " " + ddbRoll.rollKind,
+    flavor: titleCase(
+      [dbData.action, ddbRoll.rollType, ddbRoll.rollKind].join(" "),
+    ),
     rolls: [r],
     rollMode: game.settings.get("core", "rollMode"),
   };

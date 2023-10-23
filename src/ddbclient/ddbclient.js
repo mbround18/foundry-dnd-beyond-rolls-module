@@ -11,14 +11,15 @@ export function Connect() {
   if (!DEBUG.DISABLE_DDB_CALLS) {
     getSocketAndConnect();
   } else {
-    ui.notifications.info(SETTINGS.MODULE_NAME + " - DDB Calls Disabled");
+    ui.notifications.info(`${SETTINGS.MODULE_NAME} - DDB Calls Disabled`);
   }
 }
 
 function getSocketAndConnect() {
-  console.log("use cobalt cookie to get cobalt socket token");
+  console.log("Use cobalt cookie to get cobalt socket token");
   getCobaltSocketSessionFromCobaltToken().then((result) => {
-    console.log("RESULT " + result.token);
+    // Don't console log the token, it is a secret.
+    // console.log("RESULT " + result.token);
     connectSocket(result.token);
   });
 }
@@ -29,15 +30,16 @@ function connectSocket(socketToken) {
   let moduleEnabled = game.settings.get(SETTINGS.MODULE_ID, SETTINGS.ENABLED);
   if (moduleEnabled) {
     ui.notifications.info(
-      SETTINGS.MODULE_NAME + " - Attempting DDB Connection",
+      `${SETTINGS.MODULE_NAME} - Attempting DDB Connection`,
     );
+
     socket = new WebSocket(
-      "wss://game-log-api-live.dndbeyond.com/v1?gameId=" +
-        game_ID +
-        "&userId=" +
-        player_ID +
-        "&stt=" +
-        socketToken,
+      [
+        "wss://game-log-api-live.dndbeyond.com/v1?gameId=",
+        game_ID,
+        "&userId=",
+        player_ID + "&stt=" + socketToken,
+      ].join(""),
     );
 
     socket.onopen = function (e) {
@@ -51,9 +53,9 @@ function connectSocket(socketToken) {
     };
 
     socket.onmessage = function (event) {
-      if (event.data != "pong") {
+      if (event.data !== "pong") {
         let ddbData = JSON.parse(event.data);
-        if (ddbData.eventType == "dice/roll/fulfilled") {
+        if (ddbData.eventType === "dice/roll/fulfilled") {
           generateFakeRollFromDDBRoll(ddbData.data);
         }
       }
