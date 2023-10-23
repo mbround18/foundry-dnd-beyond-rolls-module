@@ -25,7 +25,12 @@ jobs:
 
       # get part of the tag after the `v`
       - name: Extract tag version number
+        id: get_version
         run: |
+          tag="${{github.ref_name}}"
+          no_v="${tag//v/}"
+
+          echo "tag=${no_v}" > $GITHUB_OUTPUT
           echo "version-without-v=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
       # Substitute the Manifest and Download URLs in the module.json
