@@ -6,15 +6,17 @@
     {
       "name": "rm2kdev",
       "url": "https://www.rm2kdev.net"
+    },
+    {
+      "name": "MBRound18",
+      "url": "https://m.bruno.fyi"
     }
   ],
-  "scripts": [
-    "module.js"
-  ],
-  "version": "This is auto replaced",
-  "url": "This is auto replaced",
-  "manifest": "This is auto replaced",
-  "download": "This is auto replaced",
+  "scripts": ["module.js"],
+  "version": "${VERSION}",
+  "url": "${REPO_URL}",
+  "manifest": "${MANIFEST_URL}",
+  "download": "${DOWNLOAD_URL}",
   "readme": "README.md",
   "compatibility": {
     "minimum": 10,
