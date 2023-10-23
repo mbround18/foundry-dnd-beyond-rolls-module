@@ -1,4 +1,4 @@
-name: Release Creation
+name: Release Processing
 
 on:
   release:
