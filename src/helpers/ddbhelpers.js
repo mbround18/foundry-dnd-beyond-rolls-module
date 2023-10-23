@@ -12,9 +12,12 @@ export function getCobaltSocketSessionFromCobaltToken() {
   );
 
   //Ask Local API to get Cobalt Socket Session.
-  let myPromise = new Promise((resolve, reject) => {
-    fetch(cobaltProxyUrl + "/" + cobaltCookie, {
-      method: "POST",
+  return new Promise((resolve, reject) => {
+    fetch(cobaltProxyUrl, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + cobaltCookie,
+      },
     })
       .then(function (result) {
         result.json().then((d) => {
@@ -27,5 +30,4 @@ export function getCobaltSocketSessionFromCobaltToken() {
         reject();
       });
   });
-  return myPromise;
 }

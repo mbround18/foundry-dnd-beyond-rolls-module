@@ -17,6 +17,7 @@ export const SETTINGS = {
 export function initializeSettings() {
   game.settings.register(SETTINGS.MODULE_ID, "proxyInstructions", {
     name: "Setup for Cobalt Proxy Url",
+    label: "Setup for Cobalt Proxy Url", // The text label used in the button
     hint: "Click here for instructions on how to setup the proxy.",
     icon: "fas fa-brands fa-github", // A Font Awesome icon used in the submenu button
     type: HowToSetupProxy, // A FormApplication subclass
@@ -77,11 +78,11 @@ export function initializeSettings() {
 
   game.settings.registerMenu(SETTINGS.MODULE_ID, "mySettingsMenuMbround18", {
     name: "Credits: mbround18",
-    label: "Credits", // The text label used in the button
+    label: "Credits: mbround18", // The text label used in the button
     hint: [
       "MBRound18 has revamped the server for use in kubernetes and docker.",
       "If you would like, please checkout the remake here:",
-    ].join("<br>"),
+    ].join(" "),
     icon: "fas fa-donate", // A Font Awesome icon used in the submenu button
     type: NewModuleGithub, // A FormApplication subclass
     restricted: true, // Restrict this submenu to game master only?
@@ -95,7 +96,7 @@ export function initializeSettings() {
       "This was created originally by rm2kdev which did an amazing job!",
       "However, it didnt suite the needs of my group, so I forked it and made some changes.",
       "Please checkout the original module here: ",
-    ].join("<br>"),
+    ].join(" "),
     icon: "fas fa-donate", // A Font Awesome icon used in the submenu button
     type: OriginalModuleGithub, // A FormApplication subclass
     restricted: true, // Restrict this submenu to game master only?
