@@ -15,7 +15,7 @@ export const SETTINGS = {
 };
 
 export function initializeSettings() {
-  game.settings.register(SETTINGS.MODULE_ID, "proxyInstructions", {
+  game.settings.registerMenu(SETTINGS.MODULE_ID, "proxyInstructions", {
     name: "Setup for Cobalt Proxy Url",
     label: "Setup for Cobalt Proxy Url", // The text label used in the button
     hint: "Click here for instructions on how to setup the proxy.",
