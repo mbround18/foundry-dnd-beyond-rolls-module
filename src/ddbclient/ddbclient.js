@@ -53,10 +53,11 @@ function connectSocket(socketToken) {
     };
 
     socket.onmessage = function (event) {
+      let eventData = event && event.data && JSON.parse(event.data);
+      let eventType = (event && (eventData.eventType || event.eventType)) || "";
       if (event.data !== "pong") {
-        let ddbData = JSON.parse(event.data);
-        if (ddbData.eventType === "dice/roll/fulfilled") {
-          generateFakeRollFromDDBRoll(ddbData.data);
+        if (eventType === "dice/roll/fulfilled" && eventData) {
+          generateFakeRollFromDDBRoll(eventData);
         }
       }
       // ui.notifications.info(`[message] Data received from server: ${event.data}`);

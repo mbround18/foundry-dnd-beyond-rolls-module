@@ -1,0 +1,9 @@
+services:
+  foundry:
+    image: mbround18/foundryvtt-docker:latest
+    ports:
+      - 4444:4444
+    volumes:
+      - ./tmp/data:/foundrydata
+      - ./tmp/app:/foundryvtt
+      - ./dist:/foundrydata/Data/modules/dndbeyond-rolls
