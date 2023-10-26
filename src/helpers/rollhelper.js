@@ -23,7 +23,7 @@ export function generateFakeRollFromDDBRoll(ddbData) {
     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
     speaker: { alias: ddbData.context.name },
     flavor: titleCase(
-      [dbData.action, ddbRoll.rollType, ddbRoll.rollKind].join(" "),
+      [ddbData.action, ddbRoll.rollType, ddbRoll.rollKind].join(" "),
     ),
     rolls: [r],
     rollMode: game.settings.get("core", "rollMode"),
