@@ -67,14 +67,9 @@ export function processDDBRoll(rollData) {
  * @param {Object} ddbData
  */
 export async function generateFakeRollFromDDBRoll(ddbData) {
-  const rolls = [];
-
-  for (const ddbRoll of (ddbData && ddbData.rolls) || []) {
-    const roll = processDDBRoll(ddbRoll);
-    console.log("[D&D Beyond Companion]: Roll: ", roll);
-    rolls.push(Promise.resolve(ChatMessage.create(roll, {})));
-  }
-
+  const rolls = (ddbData && ddbData.rolls) || [];
+  rolls.map((roll) => processDDBRoll(roll));
+  rolls.map((roll) => ChatMessage.create(roll, {}));
   return Promise.all(rolls);
 }
 

@@ -52,12 +52,12 @@ function connectSocket(socketToken) {
       }, 300000);
     };
 
-    socket.onmessage = function (event) {
+    socket.onmessage = async function (event) {
       let eventData = event && event.data && JSON.parse(event.data);
       let eventType = (event && (eventData.eventType || event.eventType)) || "";
       if (event.data !== "pong") {
         if (eventType === "dice/roll/fulfilled" && eventData) {
-          generateFakeRollFromDDBRoll(eventData).then((result) =>
+          await generateFakeRollFromDDBRoll(eventData).then((result) =>
             console.log("[D&D Roll Companion]: Rolls Created!"),
           );
         }
