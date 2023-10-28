@@ -1,0 +1,45 @@
+{
+  "id": "random",
+  "dateTime": "00000000000000",
+  "gameId": "00000000",
+  "userId": "000000000",
+  "source": "web",
+  "data": {
+    "context": {
+      "entityId": "0000000000",
+      "entityType": "character",
+      "name": "Byron Felder",
+      "avatarUrl": "https://www.dndbeyond.com/avatars/000000/0000/00000000000-000000000.jpeg",
+      "messageScope": "gameId",
+      "messageTarget": "00000000"
+    },
+    "rollId": "0000000-0000-0000-0000-000000000000",
+    "action": "Initiative",
+    "rolls": [
+      {
+        "diceNotation": {
+          "set": [
+            {
+              "count": 1,
+              "dieType": "d20",
+              "dice": [{ "dieType": "d20", "dieValue": 3 }],
+              "operation": 0
+            }
+          ],
+          "constant": 3
+        },
+        "diceNotationStr": "1d20+3",
+        "rollType": "roll",
+        "rollKind": "",
+        "result": { "constant": 3, "values": [3], "total": 6, "text": "3+3" }
+      }
+    ],
+    "setId": "00000"
+  },
+  "entityId": "00000000",
+  "entityType": "character",
+  "eventType": "dice/roll/fulfilled",
+  "persist": true,
+  "messageScope": "gameId",
+  "messageTarget": "0000000"
+}

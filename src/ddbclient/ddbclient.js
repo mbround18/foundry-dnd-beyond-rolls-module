@@ -57,7 +57,9 @@ function connectSocket(socketToken) {
       let eventType = (event && (eventData.eventType || event.eventType)) || "";
       if (event.data !== "pong") {
         if (eventType === "dice/roll/fulfilled" && eventData) {
-          generateFakeRollFromDDBRoll(eventData);
+          generateFakeRollFromDDBRoll(eventData).then((result) =>
+            console.log("[D&D Roll Companion]: Rolls Created!"),
+          );
         }
       }
       // ui.notifications.info(`[message] Data received from server: ${event.data}`);
