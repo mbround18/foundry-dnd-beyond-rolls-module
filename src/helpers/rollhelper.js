@@ -70,7 +70,9 @@ export async function generateFakeRollFromDDBRoll(ddbData) {
   const rolls = [];
 
   for (const ddbRoll of (ddbData && ddbData.rolls) || []) {
-    rolls.push(ChatMessage.create(processDDBRoll(ddbRoll), {}));
+    const roll = processDDBRoll(ddbRoll);
+    console.log("[D&D Beyond Companion]: Roll: ", roll);
+    rolls.push(Promise.resolve(ChatMessage.create(roll, {})));
   }
 
   return Promise.all(rolls);
