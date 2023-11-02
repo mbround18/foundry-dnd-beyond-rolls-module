@@ -51,6 +51,7 @@ export function processDDBRoll(rollData) {
     },
   );
 
+  console.log({ rollObject: myRollObject });
   let r = Roll.fromData(myRollObject);
 
   return {
