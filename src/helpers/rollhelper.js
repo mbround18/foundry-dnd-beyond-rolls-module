@@ -1,4 +1,4 @@
-import { titleCase } from "../utils/titlecase";
+import { logger } from "../utils/logger";
 
 /**
  * @typedef {Object} DDBRollData
@@ -50,8 +50,7 @@ export function processDDBRoll(rollData) {
       );
     },
   );
-
-  console.log({ rollObject: myRollObject });
+  logger.debug("D&D Beyond Rolls Module | Roll Object", myRollObject);
   let r = Roll.fromData(myRollObject);
 
   return {
@@ -89,7 +88,7 @@ export async function generateFakeRoll() {
     rolls: [r],
     rollMode: game.settings.get("core", "rollMode"),
   };
-  ChatMessage.create(chatOptions, {});
+  return ChatMessage.create(chatOptions, {});
 }
 
 function generateRollObject(formula, total) {

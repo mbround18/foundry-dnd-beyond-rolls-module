@@ -1,4 +1,5 @@
 import { disableModule, SETTINGS, DEBUG } from "../settings/settings";
+import { logger } from "../utils/logger";
 
 export function getCobaltSocketSessionFromCobaltToken() {
   //Get Cobalt Cookie From Settings.
@@ -21,7 +22,7 @@ export function getCobaltSocketSessionFromCobaltToken() {
     })
       .then(function (result) {
         result.json().then((d) => {
-          console.log("Successfully got socket token");
+          logger.info("Successfully got socket token");
           resolve(d);
         });
       })

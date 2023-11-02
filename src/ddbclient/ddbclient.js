@@ -4,6 +4,7 @@ import {
   generateFakeRoll,
   generateFakeRollFromDDBRoll,
 } from "../helpers/rollhelper";
+import { logger } from "../utils/logger";
 
 let socket = {};
 
@@ -16,7 +17,9 @@ export function Connect() {
 }
 
 function getSocketAndConnect() {
-  console.log("Use cobalt cookie to get cobalt socket token");
+  logger.info(
+    "D&D Beyond Rolls Module | Use cobalt cookie to get cobalt socket token",
+  );
   getCobaltSocketSessionFromCobaltToken().then((result) => {
     // Don't console log the token, it is a secret.
     // console.log("RESULT " + result.token);
@@ -43,7 +46,7 @@ function connectSocket(socketToken) {
     );
 
     socket.onopen = function (e) {
-      console.log("DDB CONNNECTED");
+      logger.info("D&D Beyond Rolls Module | Connected to DDB");
       ui.notifications.info(SETTINGS.MODULE_NAME + " - Connected to DDB");
 
       //send heartbeat to server every 5 minutes.
@@ -58,7 +61,7 @@ function connectSocket(socketToken) {
       if (event.data !== "pong") {
         if (eventType === "dice/roll/fulfilled" && eventData) {
           await generateFakeRollFromDDBRoll(eventData).then((result) =>
-            console.log("[D&D Roll Companion]: Rolls Created!"),
+            logger.debug("D&D Beyond Rolls Module | Rolls Created!"),
           );
         }
       }

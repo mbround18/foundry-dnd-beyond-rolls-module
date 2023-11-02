@@ -110,28 +110,40 @@ export function initializeSettings() {
   //   hint: "This is my first plugin for foundry, a love letter and thank you to everyone else who has spent the time to go through this process to extend foundry for me and my friends so that we could play D&D in the coolest ways, I have an ungodly amount of time learning foundry development to build this, understanding dnd beyond protocols and debugging and testing this plugin, please dear god buy me a beer if this is useful for you <3",
   //   icon: "fas fa-donate", // A Font Awesome icon used in the submenu button
   //   type: MySubmenuApplicationClass, // A FormApplication subclass
-  //   restricted: true, // Restrict this submenu to gamemaster only?
+  //   restricted: true, // Restrict this submenu to game master only?
   //   config: true,
   // });
 }
 
 class HowToSetupProxy extends FormApplication {
-  getData() {
+  async getData(_options) {
     window.open(
       "https://github.com/mbround18/foundry-dnd-beyond-rolls-companion?tab=readme-ov-file#foundry-vtt---dd-beyond-roll-integration---companion",
     );
   }
+
+  async _updateObject(event, formData) {
+    return Promise.resolve(undefined);
+  }
 }
 
 class NewModuleGithub extends FormApplication {
-  getData() {
+  async getData(_options) {
     window.open("https://github.com/mbround18/foundry-dnd-beyond-rolls-module");
+  }
+
+  async _updateObject(event, formData) {
+    return Promise.resolve(undefined);
   }
 }
 
 class OriginalModuleGithub extends FormApplication {
-  getData() {
+  async getData(_options) {
     window.open("https://github.com/rm2kdev/foundry-dnd-beyond-rolls-module");
+  }
+
+  async _updateObject(event, formData) {
+    return Promise.resolve(undefined);
   }
 }
 
