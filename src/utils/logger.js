@@ -1,6 +1,9 @@
-import { debugMode } from "./constants";
+import { isDebugMode } from "./constants";
 
-export const logger = require("pino")({
-  name: "ddb-logger",
-  level: "debug",
-});
+export const logger = console;
+
+export function debug(...args) {
+  if (isDebugMode()) {
+    logger.debug(...args);
+  }
+}

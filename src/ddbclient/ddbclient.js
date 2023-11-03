@@ -4,7 +4,7 @@ import {
   generateFakeRoll,
   generateFakeRollFromDDBRoll,
 } from "../helpers/rollhelper";
-import { logger } from "../utils/logger";
+import { debug, logger } from "../utils/logger";
 
 let socket = {};
 
@@ -33,7 +33,7 @@ function connectSocket(socketToken) {
   let moduleEnabled = game.settings.get(SETTINGS.MODULE_ID, SETTINGS.ENABLED);
   if (moduleEnabled) {
     ui.notifications.info(
-      `${SETTINGS.MODULE_NAME} - Attempting DDB Connection`,
+      `${SETTINGS.MODULE_NAME} | Attempting DDB Connection`,
     );
 
     socket = new WebSocket(
@@ -47,7 +47,7 @@ function connectSocket(socketToken) {
 
     socket.onopen = function (e) {
       logger.info("D&D Beyond Rolls Module | Connected to DDB");
-      ui.notifications.info(SETTINGS.MODULE_NAME + " - Connected to DDB");
+      ui.notifications.info(SETTINGS.MODULE_NAME + " | Connected to DDB");
 
       //send heartbeat to server every 5 minutes.
       setInterval(() => {
@@ -61,7 +61,7 @@ function connectSocket(socketToken) {
       if (event.data !== "pong") {
         if (eventType === "dice/roll/fulfilled" && eventData) {
           await generateFakeRollFromDDBRoll(eventData).then((result) =>
-            logger.debug("D&D Beyond Rolls Module | Rolls Created!"),
+            debug("D&D Beyond Rolls Module | Rolls Created!"),
           );
         }
       }
@@ -71,7 +71,7 @@ function connectSocket(socketToken) {
     socket.onclose = function (event) {
       ui.notifications.warn(
         SETTINGS.MODULE_NAME +
-          " - Connection to D&D Beyond Lost, wait 5 seconds, reconnect",
+          " | Connection to D&D Beyond Lost, wait 5 seconds, reconnect",
       );
       setTimeout(function () {
         getSocketAndConnect();

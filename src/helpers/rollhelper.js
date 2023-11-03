@@ -1,10 +1,13 @@
-import { logger } from "../utils/logger";
+import { debug, logger } from "../utils/logger";
+import { get } from "lodash-es";
+import { titleCase } from "../utils/titlecase";
 
 /**
  * @typedef {Object} DDBRollData
  * @property {Object} diceNotation
  * @property {string} diceNotationStr
  * @property {Object} result
+ * @property {Object} rollType
  *
  */
 
@@ -14,15 +17,25 @@ import { logger } from "../utils/logger";
  */
 
 /**
- *
- * @param {DDBRollData} rollData
+ * @param {object} options
+ * @param {string} options.name
+ * @param {string} options.action
+ * @param {DDBRollData} options.rollData
  */
-export function processDDBRoll(rollData) {
+export function processDDBRoll(options) {
+  const { name, action, rollData } = options;
+  let flavor = action || "Roll";
+
+  if (flavor.toLowerCase().trim() !== "roll" || rollData.rollType !== "Roll") {
+    flavor = titleCase(`${flavor} - ${rollData.rollType} Roll`);
+  }
+
   let myRollObject = generateRollObject(
     rollData.diceNotationStr,
     rollData.result.total,
   );
 
+  debug("D&D Beyond Rolls Module | Roll Data", myRollObject);
   rollData.diceNotation.set.forEach(
     (
       /**
@@ -50,13 +63,14 @@ export function processDDBRoll(rollData) {
       );
     },
   );
-  logger.debug("D&D Beyond Rolls Module | Roll Object", myRollObject);
+  debug("D&D Beyond Rolls Module | Roll Data", myRollObject);
   let r = Roll.fromData(myRollObject);
+  debug("D&D Beyond Rolls Module | Roll Object", r);
 
   return {
     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-    speaker: { alias: "D&D Beyond Dice" },
-    flavor: "Hit Check Roll",
+    speaker: { alias: name },
+    flavor,
     rolls: [r],
     rollMode: game.settings.get("core", "rollMode"),
   };
@@ -67,10 +81,15 @@ export function processDDBRoll(rollData) {
  * @param {Object} ddbData
  */
 export async function generateFakeRollFromDDBRoll(ddbData) {
-  const rolls = (ddbData && ddbData.rolls) || [];
-  rolls.map((roll) => processDDBRoll(roll));
-  rolls.map((roll) => ChatMessage.create(roll, {}));
-  return Promise.all(rolls);
+  debug("D&D Beyond Rolls Module | DDB Data", ddbData);
+  const action = get(ddbData, "data.action", "Roll");
+  const name = get(ddbData, "data.context.name", "D&D Beyond Dice");
+  const rolls = get(ddbData, "data.rolls", {});
+  return Promise.all(
+    rolls.map((rollData) =>
+      ChatMessage.create(processDDBRoll({ name, action, rollData }), {}),
+    ),
+  );
 }
 
 export async function generateFakeRoll() {

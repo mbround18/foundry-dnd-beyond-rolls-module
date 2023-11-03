@@ -28,6 +28,7 @@ module.exports = {
         extractComments: false,
       }),
     ],
+    usedExports: true,
   },
   plugins: [
     new CopyPlugin({

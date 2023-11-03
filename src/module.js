@@ -1,7 +1,21 @@
 import { SETTINGS, initializeSettings } from "./settings/settings";
 import { Connect } from "./ddbclient/ddbclient";
-import { logger } from "./utils/logger";
+import { debug, logger } from "./utils/logger";
 import { isDebugMode } from "./utils/constants";
+import { titleCase } from "./utils/titlecase";
+import packageJson from "../package.json";
+import { set } from "lodash-es";
+
+set(
+  window,
+  `set${titleCase(packageJson.name)}DebugMode`
+    .replaceAll(" ", "")
+    .replaceAll("-", ""),
+  (debugMode) => {
+    logger.info(`D&D Beyond Rolls Module | Setting Debug Mode to ${debugMode}`);
+    localStorage.setItem(name, JSON.stringify({ debugMode }));
+  },
+);
 
 /**
  * This is the entry point for the module. It is called once when Foundry VTT is ready after all data is loaded.
@@ -10,7 +24,7 @@ import { isDebugMode } from "./utils/constants";
 Hooks.on("init", function () {
   logger.info("D&D Beyond Rolls Module | Initializing DDB Companion");
   logger.level = isDebugMode() ? "debug" : "info";
-  logger.debug("D&D Beyond Rolls Module | In Debug Mode");
+  debug("D&D Beyond Rolls Module | In Debug Mode");
   initializeSettings();
 });
 
